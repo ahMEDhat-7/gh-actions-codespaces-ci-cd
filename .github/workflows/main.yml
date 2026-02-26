@@ -18,16 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install dependancies
-        run: npm install 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build dist folder
-        run: npm run build
+        run: npm install
 
   start:
     runs-on: ubuntu-latest
     steps:
       - name: run project
         run: npm run start
-    
