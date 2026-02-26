@@ -1,0 +1,33 @@
+name: node.js web app with github Actions & codespaces
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the code
+        uses: actions/checkout@v6.0.2
+      - name: setup node.js env
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: 22.x
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install dependancies
+        run: npm install 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build dist folder
+        run: npm run build
+
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run project
+        run: npm run start
+    
