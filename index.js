@@ -13,6 +13,9 @@ server.on("request", (req, res) => {
   );
 });
 
-server.listen(3000, () => {
-  console.log("server is up and listening...");
+const PORT = 3000;
+const HOST = "0.0.0.0";
+
+server.listen(PORT, HOST, () => {
+  console.log(`Server is running at http://${HOST}:${PORT}`);
 });

@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  setup:
+  setup-start-server:
     runs-on: ubuntu-latest
     steps:
       - name: checkout the code
@@ -14,30 +14,22 @@ jobs:
         uses: actions/setup-node@v6.2.0
         with:
           node-version: 22.x
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout the code
-        uses: actions/checkout@v6.0.2
+
       - name: setup node.js env
         uses: actions/setup-node@v6.2.0
         with:
           node-version: 22.x
+
       - name: install dependancies
         run: npm install
 
-  start:
-    needs:
-      - install
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout the code
-        uses: actions/checkout@v6.0.2
-      - name: setup node.js env
-        uses: actions/setup-node@v6.2.0
-        with:
-          node-version: 22.x
-      - name: install dependancies
-        run: npm install
-      - name: run project
-        run: npm run start
+      - name: Start server
+        run: |
+          npm run start &
+          echo $! > server.pid
+
+      - name: Test endpoint
+        run: curl http://localhost:3000
+
+      - name: Stop server
+        run: kill $(cat server.pid)
